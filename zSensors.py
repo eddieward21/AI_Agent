@@ -12,6 +12,7 @@ import glob
 import os
 import sys
 import time
+import cv2
 
 try:
     sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
@@ -32,10 +33,16 @@ actor_list = []
 
 def process_img(image):
     i = np.array(image.raw_data)
+    i2 = np.reshape((IMG_Y, IMG_X, 4))
+    i3 = i2[:,:,:3]
+    
+    cv2.imshow(i3, "")
+    cv2.waitKey(1)
+    return i3/255.0
     print(dir(image))
 
-IMG_X = 500
-IMG_Y = 640
+IMG_X = 640
+IMG_Y = 480
 
 try:
     client = carla.Client("localhost", 2000)
@@ -45,9 +52,10 @@ try:
     bp = blueprint_library.filter("model3")[0]
 
     spawn_point = random.choice(world.get_map().get_spawn_points())
-
+    
     walkers = blueprint_library.filter('walker.pedestrian.*')
-
+    for i in range(30):
+        world.spawn_actor(random.choice())
     vehicle = world.spawn_actor(bp, spawn_point)
     vehicle.apply_control(carla.VehicleControl(throttle=1.0, steer = 0.0))
     #vehicle.set_autopilot(True)
