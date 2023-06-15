@@ -20,7 +20,7 @@ def main():
         # Define the spawn points for vehicles and pedestrians
         spawn_points = world.get_map().get_spawn_points()
         num_vehicles = 5
-        num_walkers = 10
+        num_walkers = 1
         
         # Spawn vehicles and set them to autopilot
         for _ in range(num_vehicles):
@@ -35,18 +35,17 @@ def main():
             walker.set_autopilot(True)
         
         # Wait for a while
-        time.sleep(10)
+        time.sleep(400)
         
     finally:
-        """ 
         # Cleanup
         for actor in world.get_actors().filter('vehicle.*'):
             actor.destroy()
         
         for actor in world.get_actors().filter('walker.*'):
             actor.destroy()
-        """
-        pass
+        
+        
 
 if __name__ == '__main__':
     main()
